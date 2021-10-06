@@ -54,6 +54,8 @@ spec:
         image: "nextcloud:21.0.4-apache"
         imagePullPolicy: IfNotPresent
         env:
+        - name: OVERWRITEWEBROOT
+          value: "/cloud"
         - name: SQLITE_DATABASE
           value: "nextcloud"
         - name: NEXTCLOUD_ADMIN_USER
@@ -67,7 +69,7 @@ spec:
               name: nextcloud
               key: nextcloud-password
         - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: nextcloud.kube.home
+          value: "0* 1* 2* 3* 4* 5* 6* 7* 8* 9* nextcloud.svc.cluster.local" #hack
         - name: NEXTCLOUD_DATA_DIR
           value: "/var/www/html/data"
         ports:
@@ -78,9 +80,6 @@ spec:
           httpGet:
             path: /status.php
             port: http
-            httpHeaders:
-            - name: Host
-              value: "nextcloud.kube.home"
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5
@@ -90,9 +89,6 @@ spec:
           httpGet:
             path: /status.php
             port: http
-            httpHeaders:
-            - name: Host
-              value: "nextcloud.kube.home"
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5
@@ -136,12 +132,14 @@ metadata:
   labels:
     app.kubernetes.io/name: nextcloud
     app.kubernetes.io/component: app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
+  ingressClassName: nginx
   rules:
-  - host: nextcloud.kube.home
-    http:
+  - http:
       paths:
-      - path: /
+      - path: /cloud(/|$)(.*)
         backend:
           serviceName: nextcloud
           servicePort: 8080
