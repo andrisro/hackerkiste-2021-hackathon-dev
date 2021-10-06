@@ -13,7 +13,7 @@ terraform {
     resource_group_name  = "meta"
     storage_account_name = "hackathonterraform"
     container_name       = "tfstate"
-    key                  = "light.terraform.tfstate"
+    key                  = "light-arol.terraform.tfstate"
   }
 }
 
@@ -22,7 +22,7 @@ provider "azurerm" {
 }
 
 locals {
-  name     = "light"
+  name     = "light-arol"
   location = "West Europe"
 }
 
