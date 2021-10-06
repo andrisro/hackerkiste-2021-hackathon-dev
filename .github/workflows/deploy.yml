@@ -84,7 +84,7 @@ jobs:
 
       - name: Push NGING Base Frontend
         run: docker push ${{ needs.terraform.outputs.acr_url }}/nginx:latest
-        
+
       # Build Frontend
       - name: Build Frontend
         run: docker build -t ${{ needs.terraform.outputs.acr_url }}/frontend-nginx:latest ./frontend
@@ -130,16 +130,16 @@ jobs:
           az aks get-credentials --resource-group ${{ needs.terraform.outputs.rg }} --name ${{ needs.terraform.outputs.aks }}
 
       - name: "Add Helm Repo"
-        run: | 
+        run: |
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-      
+
       - name: "Update Helm Repo"
-        run: | 
+        run: |
           helm repo update
 
       - name: "Install Ingress Controller"
         run: |
-          helm upgrade ingress-nginx ingress-nginx/ingress-nginx --install --create-namespace --namespace ingress-controller      
+          helm upgrade ingress-nginx ingress-nginx/ingress-nginx --install --create-namespace --namespace ingress-controller
 
       - name: Deploy Manifests
         run: |

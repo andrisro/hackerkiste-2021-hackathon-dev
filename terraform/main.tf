@@ -6,13 +6,14 @@ terraform {
       version = "=2.46.0"
     }
   }
- 
+
+
   # backend configuration block
   backend "azurerm" {
     resource_group_name  = "meta"
     storage_account_name = "hackathonterraform"
     container_name       = "tfstate"
-    key                  = "lightarol.terraform.tfstate"
+    key                  = "light.terraform.tfstate"
   }
 }
 
@@ -20,9 +21,8 @@ provider "azurerm" {
   features {}
 }
 
-# locals block
 locals {
-  name     = "lightarol"
+  name     = "light"
   location = "West Europe"
 }
 
@@ -45,6 +45,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size    = "Standard_D2s_v3"
   }
 
+   # TODO: Check if working with new main code
   addon_profile {
     http_application_routing {
       enabled = true

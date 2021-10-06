@@ -1,7 +1,13 @@
-.idea/ 
+.terraform/
 terraform/.terraform
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/.terraform.lock.hcl
-*.exe
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+
+workspace.code-workspace
+.idea/
 frontend/node_modules/*
+*.exe
