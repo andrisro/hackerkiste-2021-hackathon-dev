@@ -5,7 +5,7 @@ jobs:
   terraform:
     name: 'Terraform'
     strategy: 
-      matrix: ${{fromJson(secrets.AZURE_CREDENTIALS)}}
+      matrix: ${{fromJson(${{secrets.AZURE_CREDENTIALS}})}}
     env:
       ARM_CLIENT_ID: ${{ matrix.clientId }}
       ARM_CLIENT_SECRET: ${{ matrix.clientSecret}}
